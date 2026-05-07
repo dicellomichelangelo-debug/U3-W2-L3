@@ -1,4 +1,5 @@
 import { Component, createRef } from "react";
+import SingleFilm from "./SingleFilm";
 
 class CarouselC extends Component {
   state = {
@@ -29,16 +30,6 @@ class CarouselC extends Component {
       });
   }
 
-  scroll = (direction) => {
-    if (this.carouselRef.current) {
-      const scrollAmount = 600;
-      this.carouselRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
-
   render() {
     const { movies, isLoading, error } = this.state;
 
@@ -59,80 +50,7 @@ class CarouselC extends Component {
         )}
         {!isLoading && !error && (
           <div className="position-relative">
-            <button
-              onClick={() => this.scroll("left")}
-              style={{
-                position: "absolute",
-                left: 0,
-                top: 0,
-                bottom: 0,
-                zIndex: 10,
-                background: "rgba(0,0,0,0.4)",
-                border: "none",
-                color: "white",
-                width: "40px",
-                maxHeight: "100%",
-              }}
-              className="h-100"
-            >
-              &#8249;
-            </button>
-
-            <div
-              ref={this.carouselRef}
-              className="d-flex flex-nowrap overflow-hidden pb-4"
-              style={{ scrollBehavior: "smooth" }}
-            >
-              {movies.map((movie) => (
-                <div
-                  key={movie.imdbID}
-                  className="col-6-col-md-4 col-lg-2 me-2"
-                  style={{
-                    maxWidth: "200px",
-                    maxHeight: "250px",
-                    flex: "0 0 auto",
-                  }}
-                >
-                  <img
-                    src={
-                      movie.Poster !== "N/A"
-                        ? movie.Poster
-                        : "https://via.placeholder.com/300x450?text=No+Image"
-                    }
-                    alt={movie.Title}
-                    className="img-fluid rounded shadow"
-                    style={{
-                      cursor: "pointer",
-                      transition: "transform 0.3s ease",
-                    }}
-                    onMouseOver={(e) =>
-                      (e.currentTarget.style.transform = "scale(1.05)")
-                    }
-                    onMouseOut={(e) =>
-                      (e.currentTarget.style.transform = "scale(1)")
-                    }
-                  />
-                </div>
-              ))}
-            </div>
-            <button
-              onClick={() => this.scroll("right")}
-              style={{
-                position: "absolute",
-                right: 0,
-                top: 0,
-                bottom: 0,
-                zIndex: 10,
-                background: "rgba(0,0,0,0.4)",
-                border: "none",
-                color: "white",
-                width: "40px",
-                maxHeight: "100%",
-              }}
-              className="h-100"
-            >
-              &#8250;
-            </button>
+            <SingleFilm movies={movies} carouselRef={this.carouselRef} />
           </div>
         )}
       </div>

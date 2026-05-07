@@ -1,4 +1,8 @@
+import { Link, useLocation } from "react-router-dom";
+
 function HeaderC() {
+  const location = useLocation();
+  const isActive = (path) => location.pathname === path;
   return (
     <nav className="navbar navbar-expand-lg bg-body-dark text-light align-content-center">
       <div className="container-fluid">
@@ -19,18 +23,28 @@ function HeaderC() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0 text-light">
             <li className="nav-item">
-              <a
-                className="nav-link active text-light"
-                aria-current="page"
-                href="#"
+              <Link
+                to={"/"}
+                className={`${
+                  isActive("/")
+                    ? "nav-link text-light fw-bold"
+                    : "nav-link text-light"
+                }`}
               >
                 Home
-              </a>
+              </Link>
             </li>
-            <li className="nav-item fw-bold">
-              <a className="nav-link text-light" href="#">
-                TV Shows
-              </a>
+            <li className="nav-item">
+              <Link
+                to={"/Account"}
+                className={`${
+                  isActive("/Account")
+                    ? "nav-link text-light fw-bold"
+                    : "nav-link text-light"
+                }`}
+              >
+                Account
+              </Link>
             </li>
             <li className="nav-item">
               <a className="nav-link text-light" href="#">
